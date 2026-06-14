@@ -1,91 +1,197 @@
-# Nome do Jogo
+# 🐍 Jogo da Cobra - Pygame
 
-Projeto final da disciplina de Introdução a Algoritmos/Programação, desenvolvido com Python e Pygame.
+Um clássico jogo da cobra implementado em Python com Pygame. Projeto educacional para aprender conceitos de programação como estrutura de dados, controle de fluxo e detecção de colisões.
 
-Este repositório é um template para os grupos da disciplina. A proposta é começar com uma base funcional e evoluir o jogo ao longo do semestre.
+## 🎮 Sobre o Jogo
 
-## Integrantes do grupo
+Controle uma cobra que cresce ao comer comida vermelha. Acumule pontos evitando bater nas bordas da tela ou em si mesma. Simples, mas viciante!
 
-- Nome do integrante 1
-- Nome do integrante 2
-- Nome do integrante 3
-- Nome do integrante 4
+**Características:**
+- Cobra cresce dinamicamente ao comer
+- Sistema de recorde automático
+- Detecção de colisões com bordas e auto-colisão
+- Interface limpa e responsiva
 
-## Estrutura do projeto
+## 🚀 Como Executar
 
-- `main.py`: ponto de entrada da aplicação.
-- `src/`: código-fonte principal do jogo (loop, regras, sprites e dados).
-- `assets/`: imagens, fontes e sons.
-- `data/`: arquivos persistentes (recorde/ranking).
-- `tests/`: testes unitários com `pytest`.
-- `docs/`: documentação do projeto, incluindo proposta inicial.
+### Pré-requisitos
+- Python 3.8+
+- Pygame 2.6+
 
-## Descrição do jogo
+### Instalação
 
-Descreva brevemente a ideia principal do jogo.
+1. Clone o repositório:
+```bash
+git clone <seu-repositorio>
+cd IntroAlgs_pygame_template
+```
 
-Exemplo:
+2. (Opcional) Crie um ambiente virtual:
+```bash
+python -m venv venv
+source venv/bin/activate  # Linux/macOS
+# ou
+venv\Scripts\activate  # Windows
+```
 
-> O jogo consiste em controlar um personagem que deve coletar moedas e evitar obstáculos. O jogador ganha pontos ao coletar itens e perde vidas ao colidir com obstáculos. A partida termina quando o tempo acaba ou quando o jogador perde todas as vidas.
+3. Instale as dependências:
+```bash
+pip install -r requirements.txt
+```
 
-## Objetivo do jogador
-
-Explique o que o jogador precisa fazer para vencer ou avançar no jogo.
-
-Exemplo:
-
-> O objetivo é coletar a maior quantidade possível de itens antes que o tempo acabe, evitando colisões com os obstáculos.
-
-## Regras do jogo
-
-Liste as principais regras do jogo.
-
-Exemplo:
-
-- O jogador se movimenta usando as setas do teclado.
-- Cada item coletado aumenta a pontuação.
-- Colidir com um obstáculo reduz a quantidade de vidas.
-- A partida termina quando o jogador perde todas as vidas ou quando o tempo acaba.
-
-## Controles
-
-Informe as teclas ou comandos utilizados no jogo.
-
-Exemplo:
-
-- Seta para cima: mover para cima
-- Seta para baixo: mover para baixo
-- Seta para esquerda: mover para esquerda
-- Seta para direita: mover para direita
-- Espaço: realizar ação
-- ESC: sair do jogo
-
-## Como executar o projeto
-
-### 1. Clonar o repositório
+### Executar o Jogo
 
 ```bash
-git clone LINK_DO_REPOSITORIO
-cd NOME_DA_PASTA
-pip install -r requirements.txt
 python main.py
 ```
 
-## Como executar os testes
-
+Ou com tratamento de erros melhorado:
 ```bash
-python -m pytest
+python run_game.py
 ```
 
-## Checklist mínimo para entrega
+## 🎮 Controles
 
-- Preencher este README com nome final, descrição real, regras e controles do jogo.
-- Atualizar `docs/proposta.MD` com a proposta do grupo.
-- Garantir que o jogo executa com `python main.py`.
-- Garantir que os testes passam com `pytest`.
+| Tecla | Ação |
+|-------|------|
+| ⬅️ **Arrow Left** | Mover esquerda |
+| ➡️ **Arrow Right** | Mover direita |
+| ⬆️ **Arrow Up** | Mover acima |
+| ⬇️ **Arrow Down** | Mover abaixo |
+| **ESC** | Sair (na tela de Game Over) |
 
-## Observações para os alunos
+## 📁 Estrutura do Projeto
 
-- Mantenham o código organizado em módulos pequenos e com responsabilidade clara.
-- Comentem partes importantes da lógica, principalmente regras do jogo.
-- Registrem decisões técnicas no README do grupo ao longo do desenvolvimento.
+```
+IntroAlgs_pygame_template/
+├── main.py                 # Ponto de entrada
+├── run_game.py             # Runner com tratamento de erros
+├── requirements.txt        # Dependências Python
+├── README.md              # Este arquivo
+├── src/                   # Código-fonte
+│   ├── __init__.py
+│   ├── config.py          # Configurações globais
+│   ├── funcoes.py         # Lógica do jogo
+│   ├── jogo.py            # Loop principal
+│   ├── dados.py           # Persistência de dados
+│   ├── sprites.py         # Manipulação de sprites
+│   └── README.md          # Documentação de módulos
+├── data/                  # Dados da aplicação
+│   ├── recorde.txt        # Melhor pontuação
+│   └── ranking.txt        # Ranking de jogadores (futuro)
+├── assets/                # Recursos do jogo
+│   ├── imagens/
+│   │   └── spritesheet.bmp
+│   ├── sons/
+│   └── fontes/
+├── tests/                 # Testes unitários
+│   └── test_logica.py
+└── docs/                  # Documentação
+    └── proposta.MD
+```
+
+## 📊 Gameplay
+
+**Objetivo:** Acumular a maior pontuação possível
+
+**Pontuação:**
+- +10 pontos por cada comida comida
+
+**Game Over:**
+- Cobra bate na borda da tela
+- Cobra bate em si mesma
+
+**Recorde:**
+- Automaticamente salvo em `data/recorde.txt`
+- Carregado ao reiniciar o jogo
+
+## 🏗️ Arquitetura
+
+### Módulos Principais
+
+- **`config.py`** - Constantes globais (tela 800×600, 40×30 células)
+- **`funcoes.py`** - Lógica do jogo (movimento, colisões)
+- **`jogo.py`** - Loop principal (entrada, atualização, renderização)
+- **`dados.py`** - Persistência de recorde
+- **`sprites.py`** - Carregamento de spritesheets (preparado para futuras expansões)
+
+### Estrutura da Cobra
+
+A cobra é representada como uma lista de células:
+```python
+cobra = [
+    {"x": 20, "y": 15},  # Cabeça
+    {"x": 19, "y": 15},  # Corpo
+    {"x": 18, "y": 15},  # Cauda
+]
+```
+
+### Fluxo Principal
+
+```
+Inicializar Pygame
+    ↓
+Criar Cobra e Comida
+    ↓
+LOOP:
+  1. Capturar entrada (teclado)
+  2. Mover cobra
+  3. Verificar colisões
+  4. Atualizar recorde
+  5. Renderizar cena
+    ↓
+Game Over? → Exibir mensagem e aguardar ESC
+    ↓
+Finalizar Pygame
+```
+
+## 🧪 Testes
+
+Execute os testes de lógica:
+```bash
+python -m pytest tests/
+```
+
+Ou teste manualmente o import:
+```bash
+python test_imports.py
+```
+
+## 📚 Conceitos Educacionais
+
+Este projeto demonstra:
+
+- **Estruturas de Dados**: Uso de listas e dicionários para representar a cobra
+- **Controle de Fluxo**: Loop principal com múltiplas condições
+- **Detecção de Colisões**: Verificação de posições
+- **Persistência de Dados**: Salva/carregamento de arquivo
+- **Modularização**: Separação de responsabilidades em múltiplos arquivos
+- **Eventos**: Processamento de entrada de teclado
+
+## 🎯 Roadmap
+
+- [ ] Diferentes níveis de dificuldade
+- [ ] Velocidade progressiva
+- [ ] Efeitos sonoros
+- [ ] Gráficos melhorados com sprites
+- [ ] Ranking de múltiplos jogadores
+- [ ] Modo multiplayer
+- [ ] Pausa do jogo
+
+## 💡 Dicas
+
+- Para aumentar a dificuldade, reduza `FPS` em `src/config.py`
+- Para mudar cores, edite `src/config.py` (RGB: 0-255)
+- Para adicionar novos sprites, use `src/sprites.py`
+
+## 📝 Licença
+
+Este é um projeto educacional. Sinta-se livre para usar e modificar.
+
+## 👤 Autor
+
+Desenvolvido como projeto final de Introdução a Algoritmos com Pygame.
+
+---
+
+**Divirta-se jogando! 🎮**

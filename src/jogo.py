@@ -5,19 +5,22 @@ from src.config import (
     ALTURA_TELA,
     FPS,
     TITULO_JOGO,
-    CINZA,
+    PRETO,
+    VERDE,
+    VERMELHO,
+    TAMANHO_CELULA,
     CAMINHO_RECORDE,
-    CAMINHO_SPRITES,
 )
 
 from src.funcoes import (
     calcular_pontos,
-    jogador_perdeu,
-    limitar_valor,
-    verificar_colisao,
-    tomar_dano,
+    mover_cobra,
+    cobra_perde_segmento,
+    cobra_colidiu_com_borda,
+    cobra_colidiu_consigo_mesma,
+    cobra_comeu_comida,
+    gerar_comida_aleatoria,
 )
-from src.sprites import pegar_sprite
 from src.dados import (
     salvar_recorde,
     carregar_recorde,
@@ -25,118 +28,135 @@ from src.dados import (
 
 
 def executar_jogo():
-    """Executa o loop principal do jogo e controla estado, colisões e pontuação."""
+    """Executa o loop principal do Jogo da Cobra."""
     pygame.init()
-    
 
     tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     pygame.display.set_caption(TITULO_JOGO)
 
     relogio = pygame.time.Clock()
     rodando = True
+    game_over = False
 
-    # 1. Carregando as imagens recortadas do Spritesheet
+    # Inicializa a cobra no meio da tela (coordenadas em células)
+    largura_celulas = LARGURA_TELA // TAMANHO_CELULA
+    altura_celulas = ALTURA_TELA // TAMANHO_CELULA
 
+    cobra = [
+        {"x": largura_celulas // 2, "y": altura_celulas // 2},
+        {"x": largura_celulas // 2 - 1, "y": altura_celulas // 2},
+        {"x": largura_celulas // 2 - 2, "y": altura_celulas // 2},
+    ]
 
-    # Jogador: usando tamanho 110x110 para capturar o quadrado perfeitamente
-    player_image = pegar_sprite(CAMINHO_SPRITES, x=110, y=120, width=190, height=190, scale=0.5)
+    # Direção inicial (para a direita)
+    direcao = "RIGHT"
+    proxima_direcao = "RIGHT"
 
-    # Gema pequena: usando tamanho 64x64
-    gem_image    = pegar_sprite(CAMINHO_SPRITES, x=900, y=690, width=200, height=200, scale=0.5)
+    # Comida
+    comida = gerar_comida_aleatoria(LARGURA_TELA, ALTURA_TELA, TAMANHO_CELULA, cobra)
 
-    # Morcego: usando tamanho 180x120 por causa das asas abertas
-    bat_image    = pegar_sprite(CAMINHO_SPRITES, x=905, y=1060, width=200, height=130, scale=0.5)
-    
-    # 2. Criando a estrutura de Sprites usando Dicionários
-    jogador = {
-        "imagem": player_image,
-        "rect": player_image.get_rect(topleft=(100, 100))
-    }
-
-    gema = {
-        "imagem": gem_image,
-        "rect": gem_image.get_rect(topleft=(500, 300))
-    }
-    
-    inimigo = {
-        "imagem": bat_image,
-        "rect": bat_image.get_rect(topleft=(200, 500))
-    }
-
-    velocidade = 5
+    # Pontuação
     pontos = 0
-    vidas = 3
     recorde = carregar_recorde(CAMINHO_RECORDE)
 
-    # Loop principal: processa entrada, atualiza estado e renderiza a cena.
+    # Loop principal do jogo
     while rodando:
         relogio.tick(FPS)
 
+        # Captura eventos
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 rodando = False
+            elif evento.type == pygame.KEYDOWN:
+                # Trata entrada do teclado para mudar direção
+                # Evita que a cobra vire 180 graus para si mesma
+                if evento.key == pygame.K_UP and direcao != "DOWN":
+                    proxima_direcao = "UP"
+                elif evento.key == pygame.K_DOWN and direcao != "UP":
+                    proxima_direcao = "DOWN"
+                elif evento.key == pygame.K_LEFT and direcao != "RIGHT":
+                    proxima_direcao = "LEFT"
+                elif evento.key == pygame.K_RIGHT and direcao != "LEFT":
+                    proxima_direcao = "RIGHT"
 
-        teclas = pygame.key.get_pressed()
+        # Atualiza a direção se não tiver sido cancelada
+        direcao = proxima_direcao
 
-        # Movimentação alterando direto os eixos X e Y do retângulo do jogador
-        if teclas[pygame.K_LEFT]:
-            jogador["rect"].x -= velocidade
-        if teclas[pygame.K_RIGHT]:
-            jogador["rect"].x += velocidade
-        if teclas[pygame.K_UP]:
-            jogador["rect"].y -= velocidade
-        if teclas[pygame.K_DOWN]:
-            jogador["rect"].y += velocidade
+        # Move a cobra
+        if not game_over:
+            mover_cobra(cobra, direcao)
 
-        # Limitando o jogador dentro das bordas da tela usando as propriedades do Rect
-        jogador["rect"].x = limitar_valor(jogador["rect"].x, 0, LARGURA_TELA - jogador["rect"].width)
-        jogador["rect"].y = limitar_valor(jogador["rect"].y, 0, ALTURA_TELA - jogador["rect"].height)
+            # Verifica colisão com a comida
+            if cobra_comeu_comida(cobra, comida):
+                pontos = calcular_pontos(pontos, 10)
+                comida = gerar_comida_aleatoria(LARGURA_TELA, ALTURA_TELA, TAMANHO_CELULA, cobra)
+            else:
+                # Se não comeu, perde um segmento (movimento normal)
+                cobra_perde_segmento(cobra)
 
-        # Verificação de colisão com a Gema (antigo 'item')
-        if verificar_colisao(jogador["rect"], gema["rect"]):
-            pontos = calcular_pontos(pontos, 10)
+            # Verifica fim de jogo
+            if cobra_colidiu_com_borda(cobra, LARGURA_TELA, ALTURA_TELA, TAMANHO_CELULA):
+                game_over = True
+            elif cobra_colidiu_consigo_mesma(cobra):
+                game_over = True
 
-            # Move a gema de lugar ao coletar
-            gema["rect"].x += 80
-            gema["rect"].y += 50
-
-            # Se a gema sair da tela, volta para uma posição segura
-            if gema["rect"].x > LARGURA_TELA - gema["rect"].width:
-                gema["rect"].x = 50
-            if gema["rect"].y > ALTURA_TELA - gema["rect"].height:
-                gema["rect"].y = 50
-
-        # Verificação de colisão com o Inimigo
-        if verificar_colisao(jogador["rect"], inimigo["rect"]):
-            vidas = tomar_dano(vidas, 1)
-
-            # Afasta o inimigo ao colidir
-            inimigo["rect"].x += 80
-            inimigo["rect"].y += 50
-
-            if inimigo["rect"].x > LARGURA_TELA - inimigo["rect"].width:
-                inimigo["rect"].x = 50
-            if inimigo["rect"].y > ALTURA_TELA - inimigo["rect"].height:
-                inimigo["rect"].y = 50
-
-        # Regras de fim de jogo e recorde
-        if jogador_perdeu(vidas):
-            rodando = False
-
+        # Atualiza recorde se necessário
         if pontos > recorde:
             recorde = pontos
             salvar_recorde(CAMINHO_RECORDE, recorde)
 
+        # Atualiza o título da janela
+        status = "GAME OVER" if game_over else "JOGANDO"
         pygame.display.set_caption(
-            f"{TITULO_JOGO} | Pontos: {pontos} | Recorde: {recorde} | Vidas: {vidas}"
+            f"{TITULO_JOGO} | Pontos: {pontos} | Recorde: {recorde} | {status}"
         )
 
-        tela.fill(CINZA)
+        # Desenha a cena
+        tela.fill(PRETO)
 
-        # Desenhando os elementos na tela passando a imagem e o rect de cada dicionário
-        tela.blit(gema["imagem"], gema["rect"])
-        tela.blit(inimigo["imagem"], inimigo["rect"])
-        tela.blit(jogador["imagem"], jogador["rect"])
+        # Desenha a cobra (verde)
+        for segmento in cobra:
+            x_pixel = segmento["x"] * TAMANHO_CELULA
+            y_pixel = segmento["y"] * TAMANHO_CELULA
+            pygame.draw.rect(
+                tela,
+                VERDE,
+                (x_pixel, y_pixel, TAMANHO_CELULA, TAMANHO_CELULA)
+            )
+            # Desenha borda para melhor visualização
+            pygame.draw.rect(
+                tela,
+                (0, 100, 0),
+                (x_pixel, y_pixel, TAMANHO_CELULA, TAMANHO_CELULA),
+                1
+            )
+
+        # Desenha a comida (vermelho)
+        x_pixel = comida["x"] * TAMANHO_CELULA
+        y_pixel = comida["y"] * TAMANHO_CELULA
+        pygame.draw.rect(
+            tela,
+            VERMELHO,
+            (x_pixel, y_pixel, TAMANHO_CELULA, TAMANHO_CELULA)
+        )
+        pygame.draw.rect(
+            tela,
+            (200, 0, 0),
+            (x_pixel, y_pixel, TAMANHO_CELULA, TAMANHO_CELULA),
+            1
+        )
+
+        # Se game over, exibe mensagem
+        if game_over:
+            fonte = pygame.font.Font(None, 36)
+            texto = fonte.render("GAME OVER! Pressione ESC para sair", True, VERMELHO)
+            rect_texto = texto.get_rect(center=(LARGURA_TELA // 2, ALTURA_TELA // 2))
+            tela.blit(texto, rect_texto)
+
+            # Permite sair com ESC
+            teclas = pygame.key.get_pressed()
+            if teclas[pygame.K_ESCAPE]:
+                rodando = False
 
         pygame.display.flip()
 
