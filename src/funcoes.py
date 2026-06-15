@@ -3,14 +3,43 @@ def calcular_pontos(pontos_atual, pontos_ganhos):
     return pontos_atual + pontos_ganhos
 
 
+def calcular_nivel(pontos):
+    """
+    Calcula o nível baseado na pontuação.
+    A cada 100 pontos, o nível aumenta em 1.
+    """
+    return max(1, pontos // 100 + 1)
+
+
+def calcular_velocidade(nivel, fps_base):
+    """
+    Calcula a velocidade (FPS) baseada no nível.
+    A cada nível, aumenta 1 FPS até um máximo de 30 FPS.
+    """
+    velocidade = fps_base + (nivel - 1)
+    return min(velocidade, 30)
+
+
 def tomar_dano(vida_atual, dano):
     """Reduz a vida atual com base no dano recebido."""
-    return vida_atual - dano
+    return max(0, vida_atual - dano)
 
 
 def jogador_perdeu(vidas):
     """Indica se o jogador ficou sem vidas."""
     return vidas <= 0
+
+
+def tempo_expirou(tempo_restante):
+    """Indica se o tempo expirou."""
+    return tempo_restante <= 0
+
+
+def formatar_tempo(segundos):
+    """Converte segundos para formato MM:SS."""
+    minutos = segundos // 60
+    segundos = segundos % 60
+    return f"{minutos:02d}:{segundos:02d}"
 
 
 def limitar_valor(valor, minimo, maximo):
@@ -75,8 +104,8 @@ def cobra_colidiu_com_borda(cobra, largura_tela, altura_tela, tamanho_celula):
 def cobra_colidiu_consigo_mesma(cobra):
     """Verifica se a cobra colidiu consigo mesma."""
     cabeca = cobra[0]
-    # Verifica se a cabeça está na mesma posição de algum segmento (a partir do terceiro)
-    for segmento in cobra[4:]:  # Começa do quarto segmento
+    # Verifica se a cabeça está na mesma posição de qualquer segmento (exceto a cabeça)
+    for segmento in cobra[1:]:  # Todos os segmentos exceto a cabeça
         if cabeca["x"] == segmento["x"] and cabeca["y"] == segmento["y"]:
             return True
     return False
