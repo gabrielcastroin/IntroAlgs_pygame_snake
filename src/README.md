@@ -8,20 +8,22 @@ O Jogo da Cobra é um clássico onde você controla uma cobra que cresce ao come
 
 **Características:**
 - Tela: 800×600 pixels (40×30 células)
-- Velocidade: 10 FPS (1 movimento por frame)
+- Velocidade: 10 FPS base + progressão e buffs
+- Cenário: Infinito (atravessa bordas)
+- Itens: 4 tipos de alimentos (Normal, Ouro, Pimenta, Cogumelo)
 - Cobra inicial: 3 segmentos
-- Comida: posicionamento aleatório
-- Sistema de recorde: salvo automaticamente
+- Sistema de recorde: visual e persistente
 
 ## Arquivos
 
 ### `jogo.py` - Loop Principal
 Implementa o loop principal do jogo:
 - Inicialização da cobra (lista de células)
-- Processamento de entrada (setas do teclado)
-- Movimentação e detecção de colisões
-- Renderização (cobra verde, comida vermelha)
-- Tela de Game Over com mensagem
+- Processamento de entrada (suporta inversão de controles)
+- Movimentação (com travessia de bordas) e detecção de colisões
+- Lógica de Timers para Power-ups e Debuffs
+- Renderização (cobra dinâmica, HUD com efeitos, 4 tipos de comida)
+- Telas de Menu, Pausa e Game Over
 
 ### `config.py` - Configurações Globais
 Constantes centralizadas:

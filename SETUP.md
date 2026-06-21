@@ -105,18 +105,23 @@ IntroAlgs_pygame_snake/
 
 ## Funcionários Implementadas
 
-✅ **Sistema de Pontuação**
-- 10 pontos por alimento
-- Multiplier por tempo bônus (futuro)
+✅ **Sistema de Pontuação e Itens Especiais**
+- 10 pontos por alimento normal
+- Maçã Ouro (Velocidade + Pontos bônus)
+- Pimenta (Inversão de controles)
+- Cogumelo (Redução de tamanho)
+
+✅ **Mecânica de Cenário Infinito**
+- Bater nas bordas faz a cobra atravessar para o outro lado
 
 ✅ **Níveis Dinâmicos**
 - A cada 5 alimentos = +1 nível
 - Cor da cobra muda por nível (verde → amarelo → vermelho)
-- Velocidade aumenta com nível (10-25 FPS)
+- Velocidade aumenta com nível e itens
 
-✅ **Menu Principal**
+✅ **Menu Principal e Recordes Visuais**
 - Jogar nova partida
-- Ver recorde
+- Ver Recorde (Tela gráfica dedicada)
 - Sair do jogo
 
 ✅ **Pausa**

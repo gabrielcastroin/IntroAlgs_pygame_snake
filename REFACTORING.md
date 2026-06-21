@@ -1,12 +1,32 @@
 # Resumo das Modificações - Refatoração Completa
 
 ## Data
-16 de janeiro de 2025
+21 de junho de 2026
 
 ## Objetivo
-Criar uma versão quase completa do jogo com todas as principais interações, regras e mecânicas previstas na proposta, além de corrigir todos os erros e melhorar a jogabilidade.
+Diferenciar o jogo com mecânicas avançadas de Power-ups, Debuffs e Cenário Infinito, além de melhorar a interface visual de recordes.
 
-## Arquivos Criados
+## Arquivos Modificados / Criados
+
+### 1. **src/cobra.py**
+- Adicionado método `atravessar_borda()` para lógica de cenário infinito.
+
+### 2. **src/utils.py**
+- Atualizado `gerar_comida_aleatoria()` para retornar diferentes tipos de alimentos com probabilidades variadas (Normal, Ouro, Pimenta, Cogumelo).
+
+### 3. **src/jogo.py**
+- Implementação de lógica de Power-up (Velocidade) e Debuff (Inversão de Controles).
+- Renderização de diferentes tipos de comida com cores específicas.
+- Avisos visuais no HUD para efeitos ativos.
+- Integração da nova tela visual de recordes.
+
+### 4. **src/menu.py**
+- Criação de `exibir_tela_recordes()` para substituir a saída em texto simples por uma interface gráfica.
+
+---
+
+## Resumo das Modificações Anteriores - Janeiro 2025
+- (Lógica original de refatoração para OOP e módulos...)
 
 ### 1. **src/cobra.py** (⭐ NOVO)
 - Encapsulamento completo da lógica da cobra em uma classe OOP

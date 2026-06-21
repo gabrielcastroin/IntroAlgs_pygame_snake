@@ -4,31 +4,38 @@ Um clássico jogo da cobra implementado em Python com Pygame. Projeto educaciona
 
 ## 🎮 Sobre o Jogo
 
-Controle uma cobra que cresce ao comer comida vermelha. Acumule pontos evitando bater nas bordas da tela ou em si mesma. Com sistema completo de vidas, tempo, ranking e progressão por níveis!
+Controle uma cobra que cresce ao comer. Sobreviva a obstáculos dinâmicos, colete power-ups e gerencie sua vida para bater o recorde!
 
 **Características:**
 - 🐍 Cobra cresce dinamicamente ao comer
-- ❤️ Sistema de vidas (3 vidas por padrão)
+- 🌌 **Cenário Infinito**: Atravessa bordas (estilo Pac-man)
+- 🍎 **Alimentos Especiais**: Maçã de Ouro (Speed), Pimenta (Inversão), Cogumelo (Shrink) e Morango (Heal)
+- 🧱 **Labirinto Dinâmico**: Obstáculos que aparecem e desaparecem ciclicamente a cada 60 segundos
+- ❤️ **Sistema de HP**: 3 corações (6 metades de HP) com sistema de imunidade
 - ⏱️ Limite de tempo (5 minutos)
 - 📊 Sistema de nível progressivo
-- 🏆 Ranking automático (Top 10)
+- 🏆 Ranking automático (Top 10) e High Scores visual
 - 💾 Persistência de recorde
-- 🎯 Velocidade aumenta com o nível
-- 👤 Sistema de nome do jogador
-- 🎨 Interface visual com HUD completo
-- 🧪 Testes unitários extensivos
+- 🎨 **Visual Moderno**: Fundo em xadrez azul escuro e HUD estilo Adobe Stock
 
 ## 📊 Sistemas de Jogo
 
-### Sistema de Pontuação
-- **+10 pontos** por cada alimento consumido
-- **+Pontos de bônus** por tempo restante ao vencer (5 pts/segundo)
+### Sistema de Pontuação e Itens
+- **Maçã Normal**: +10 pontos.
+- **Maçã de Ouro**: +30 pontos e aumento de velocidade temporário (5s).
+- **Pimenta**: +10 pontos mas inverte os controles (5s).
+- **Cogumelo**: +10 pontos e reduz o tamanho da cobra pela metade.
+- **Morango**: +20 pontos e recupera 1 coração inteiro (+2 HP).
+- **Bônus**: Pontos extras por tempo restante ao vencer (5 pts/segundo).
 
-### Sistema de Vidas
-- Começa com **3 vidas**
-- Perde 1 vida ao bater na borda da tela
-- Perde 1 vida ao bater em si mesma
-- **Game Over** quando as vidas acabam
+### Sistema de Fronteiras e Obstáculos
+- O campo de jogo é **infinito**: ao ultrapassar qualquer borda, a cobra reaparece no lado oposto.
+- **Labirinto**: A cada minuto, um labirinto de obstáculos surge por 30 segundos. Um alerta visual indica quando o labirinto está prestes a aparecer.
+
+### Sistema de Vida e Dano
+- O jogador possui **3 corações** (cada um com 2 pontos de HP, total 6).
+- Colisões com obstáculos ou com o próprio corpo retiram HP.
+- Após sofrer dano, a cobra ganha **imunidade temporária** (piscando na tela).
 
 ### Sistema de Tempo
 - **5 minutos (300 segundos)** de tempo total

@@ -6,36 +6,45 @@ Módulo de Utilidades - Funções auxiliares do jogo
 import random
 
 
-def gerar_comida_aleatoria(largura_tela, altura_tela, tamanho_celula, cobra_corpo):
+def gerar_comida_aleatoria(largura_tela, altura_tela, tamanho_celula, cobra_corpo, obstaculos=None):
     """
-    Gera uma nova posição de comida aleatória que não colida com a cobra.
-    
-    Args:
-        largura_tela: Largura da tela em pixels
-        altura_tela: Altura da tela em pixels
-        tamanho_celula: Tamanho de cada célula em pixels
-        cobra_corpo: Lista com o corpo da cobra
-    
-    Returns:
-        Dict com coordenadas {"x": ..., "y": ...}
+    Gera uma nova posição de comida aleatória que não colida com a cobra nem com obstáculos.
     """
+    if obstaculos is None:
+        obstaculos = []
+        
     max_x = largura_tela // tamanho_celula
-    max_y = altura_tela // tamanho_celula
+    max_y = (altura_tela - 30) // tamanho_celula  # Ajustado pro tamanho do HUD
     
     while True:
         x = random.randint(0, max_x - 1)
         y = random.randint(0, max_y - 1)
         
-        # Verifica se não está na cobra
+        # Verifica se está livre
         colisao = False
         for segmento in cobra_corpo:
             if segmento["x"] == x and segmento["y"] == y:
                 colisao = True
                 break
+        for obs in obstaculos:
+            if obs["x"] == x and obs["y"] == y:
+                colisao = True
+                break
         
         if not colisao:
-            return {"x": x, "y": y}
-
+            # Chance de ser uma comida especial
+            tipo = "NORMAL"
+            chance = random.random()
+            if chance < 0.1:
+                tipo = "OURO"
+            elif chance < 0.2:
+                tipo = "PIMENTA"
+            elif chance < 0.3:
+                tipo = "COGUMELO"
+            elif chance < 0.45:  # Morango ~15% de chance
+                tipo = "MORANGO"
+            
+            return {"x": x, "y": y, "tipo": tipo}
 
 def calcular_velocidade(alimentos_coletados, fps_base=10):
     """

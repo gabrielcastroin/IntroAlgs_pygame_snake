@@ -3,6 +3,43 @@
 ## 📊 Novos Sistemas
 
 ```
+VIDAS                TEMPO              NÍVEL           ITENS ESPECIAIS
+─────────────────    ──────────────────  ────────────    ──────────────
+❤️ 3 vidas            ⏱️ 5 minutos        📊 Dinâmico      🍎 Ouro: Speed
+Perde 1 por colisão   Alerta: < 30s      +1 a cada 5 al.  🌶️ Pimenta: Invert
+Game Over: 0 vidas    Bônus ao vencer    Máx 30 FPS base  🍄 Cogumelo: Shrink
+Atravessa bordas!     Vitória!           Exibição HUD    Auto-colisão mata
+```
+
+## 🎯 Fluxo de Jogo
+
+```
+┌─────────────────────┐
+│  MENU PRINCIPAL     │
+│ JOGAR / RECORDES    │
+└────────────┬────────┘
+             │
+┌────────────▼──────────────┐
+│   INICIALIZA JOGO         │
+│  - 3 vidas, 5 minutos     │
+│  - Cobra no centro        │
+│  - Nível 1 (10 FPS)       │
+└────────────┬──────────────┘
+             │
+        ┌────▼────────────────────────────────┐
+        │     LOOP PRINCIPAL                  │
+        │ • Captura entrada (Normal/Invert)   │
+        │ • Move cobra (Atravessa bordas)     │
+        │ • Verifica colisões (Auto/Itens)    │
+        │ • Gerencia timers de Power-ups      │
+        │ • Desenha HUD e Efeitos ativos      │
+        └────┬───────────────────┬────────────┘
+```
+
+oldString:
+## 📊 Novos Sistemas
+
+```
 VIDAS                TEMPO              NÍVEL           RANKING
 ─────────────────    ──────────────────  ────────────    ──────────
 ❤️ 3 vidas            ⏱️ 5 minutos        📊 Dinâmico      🏆 Top 10

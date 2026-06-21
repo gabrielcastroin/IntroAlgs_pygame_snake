@@ -173,3 +173,43 @@ def exibir_tela_game_over(tela, pontos, alimentos, recorde):
         pygame.display.flip()
     
     return "SAIR"
+
+
+def exibir_tela_recordes(tela, recorde):
+    """
+    Exibe a tela de recordes.
+    
+    Args:
+        tela: Objeto pygame display
+        recorde: O valor do recorde atual
+    """
+    relogio = pygame.time.Clock()
+    aguardando = True
+    
+    while aguardando:
+        relogio.tick(30)
+        
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                return
+            elif evento.type == pygame.KEYDOWN:
+                if evento.key == pygame.K_ESCAPE or evento.key == pygame.K_RETURN:
+                    return
+                    
+        tela.fill(PRETO)
+        
+        fonte_titulo = pygame.font.Font(None, 72)
+        fonte_normal = pygame.font.Font(None, 48)
+        fonte_pequena = pygame.font.Font(None, 24)
+        
+        titulo = fonte_titulo.render("RECORDES", True, AMARELO)
+        tela.blit(titulo, (LARGURA_TELA // 2 - titulo.get_width() // 2, 80))
+        
+        texto_recorde = fonte_normal.render(f"Melhor Pontuação: {recorde}", True, BRANCO)
+        tela.blit(texto_recorde, (LARGURA_TELA // 2 - texto_recorde.get_width() // 2, 250))
+        
+        instrucao = fonte_pequena.render("Pressione ESC ou ENTER para voltar", True, CINZA)
+        tela.blit(instrucao, (LARGURA_TELA // 2 - instrucao.get_width() // 2, ALTURA_TELA - 50))
+        
+        pygame.display.flip()
+

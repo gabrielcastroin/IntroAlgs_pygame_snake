@@ -9,12 +9,36 @@ Status: ✅ COMPLETO E TESTADO
 
 ## 📋 LISTA DE FEATURES IMPLEMENTADAS
 
-### 1. ❤️ SISTEMA DE VIDAS
-- **Vidas iniciais**: 3 vidas por padrão (configurável em `src/config.py`)
-- **Perda de vidas**: 1 vida por colisão (borda ou auto-colisão)
-- **Game Over**: Quando as vidas acabam
-- **HUD**: Exibição de vidas com alerta (vermelho quando = 1)
-- **Reinício**: Cobra reinicia após colisão (sem perder todas as vidas)
+### 1. 🍎 VARIANTES DE COMIDA (NOVO)
+- **Maçã Normal (Vermelha)**: +10 pontos e crescimento normal.
+- **Maçã de Ouro (Amarela)**: +30 pontos e **Super Velocidade** (+50% FPS) por 5 segundos.
+- **Pimenta (Vermelho Claro)**: +10 pontos e **Controles Invertidos** por 5 segundos.
+- **Cogumelo (Roxo)**: +10 pontos e **Corta o tamanho da cobra pela metade** (ajuda na sobrevivência).
+
+### 2. 🌌 CENÁRIO INFINITO (NOVO)
+- A cobra não morre mais ao bater nas bordas da tela.
+- Ao sair por um lado, ela reaparece instantaneamente no lado oposto (estilo Pac-man).
+- Aumenta o foco na auto-colisão e na gestão do tamanho da cobra.
+
+### 3. 🎨 VISUAIS E HUD MELHORADOS (NOVO)
+- **Visual Estilo Retrô**: Fundo em xadrez azul com HUD minimalista superior.
+- **HUD Dinâmico**: Mostra `SCORE`, `LEVEL` e corações de vida.
+- **Avisos de Power-ups**: Texto piscante no HUD indicando "VELOCIDADE!", "INVERTIDO!" ou avisos de Labirinto iminente.
+
+### 4. ❤️ SISTEMA DE VIDAS (REFORMULADO)
+- **Corações e Metades**: Agora o jogador possui 3 corações (6 metades de HP).
+- **Dano Progressivo**: Colisões com o corpo ou obstáculos retiram 1 metade de coração.
+- **Sistema de Imunidade**: Após ser atingido, a cobra pisca e fica imune por 2 segundos.
+- **Recuperação**: Coletar Morangos recupera 1 coração inteiro (+2 HP).
+
+### 5. 🍓 NOVO ITEM: MORANGO
+- **Função**: Cura e Pontuação.
+- **Efeito**: Recupera vida perdida e concede bônus de pontos.
+
+### 6. 🧱 LABIRINTOS DINÂMICOS
+- **Ciclo de Tempo**: A cada 60 segundos, o cenário muda.
+- **Aviso antecipado**: Nos últimos 5 segundos do ciclo, um alerta de "LABIRINTO EM X..." aparece.
+- **Obstáculos Aleatórios**: Labirintos surgem na tela, exigindo manobras precisas.
 
 **Funções adicionadas em `src/funcoes.py`:**
 - `tomar_dano()` - Reduz vidas com segurança

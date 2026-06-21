@@ -11,24 +11,30 @@
 ### Core Mechanics ✅
 - [x] Cobra se move em 4 direções (↑↓←→)
 - [x] Prevenção de virar 180°
-- [x] Comida gerada aleatoriamente
-- [x] Colisão com bordas detectada
-- [x] Auto-colisão detectada
-- [x] Crescimento ao comer
-- [x] Pontuação (+10 por alimento)
+- [x] Comida gerada aleatoriamente (5 tipos: Normal, Ouro, Pimenta, Cogumelo, Morango)
+- [x] Cenário Infinito: Atravessa bordas (estilo Pac-man)
+- [x] Auto-colisão detectada (retira HP)
+- [x] Crescimento ao comer (exceto Cogumelo)
+- [x] Pontuação dinâmica por tipo de alimento
+- [x] **Labirinto Dinâmico**: Obstáculos que aparecem e somem cyclicamente
 
 ### Systems ✅
 - [x] **Sistema de Nível**: 1 nível a cada 5 alimentos
-- [x] **Sistema de Velocidade**: 10-25 FPS por nível
-- [x] **Sistema de Cores**: 7 níveis (verde → vermelho)
-- [x] **Sistema de Recorde**: TXT persistente
-- [x] **Sistema de Ranking**: JSON (Top 10, futuro Top 5)
+- [x] **Sistema de Velocidade**: 10-25 FPS base + Buff de velocidade (Maçã Ouro)
+- [x] **Sistema de Efeitos**: Inversão de controles (Pimenta) e Encolhimento (Cogumelo)
+- [x] **Sistema de Vida Visual**: 3 corações (6 metades de HP) com animação de dano
+- [x] **Sistema de Imunidade**: Piscagem e proteção temporária pós-dano
+- [x] **Sistema de Cores**: 7 níveis para a cobra e cores específicas para alimentos
+- [x] **Sistema de Recorde**: TXT persistente com tela visual dedicada
+- [x] **Sistema de Ranking**: JSON (Top 10)
 
 ### Interface ✅
 - [x] Menu principal (Jogar, Recordes, Sair)
 - [x] Navegação com setas ↑↓ + ENTER
-- [x] HUD com info em tempo real
+- [x] **HUD Moderno**: Layout Azul Escuro com Score formatado e Level
+- [x] **Aviso de Labirinto**: Contagem regressiva para surgimento de obstáculos
 - [x] Tela de pausa com ESC
+- [x] Tela visual de Recordes / High Scores
 - [x] Tela de game over com opções
 - [x] Reiniciar com R
 - [x] Sair com ESC

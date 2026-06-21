@@ -21,6 +21,13 @@ AMARELO = (255, 255, 0)
 AZUL = (0, 0, 255)
 LARANJA = (255, 165, 0)
 
+# Cores Temáticas Modificadas (Visual do Print)
+FUNDO_1 = (37, 40, 61)      # Azul escuro fundo
+FUNDO_2 = (46, 50, 74)      # Azul menos escuro fundo (xadrez)
+FUNDO_HUD = (30, 32, 50)    # Cor da barra superior (HUD)
+COR_OBSTACULO = (120, 120, 150) # Bloquinhos do labirinto
+COR_LETRA_HUD = (180, 190, 220)
+
 # ===== JOGO DA COBRA =====
 TAMANHO_CELULA = 20  # Tamanho de cada célula em pixels
 PONTOS_POR_COMIDA = 10

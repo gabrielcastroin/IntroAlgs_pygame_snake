@@ -39,23 +39,23 @@ Objetivo:
 
 Regras do grupo:
 
-- Regra 1: A cobra se move automaticamente na direção atual a cada intervalo de tempo fixo.
-- Regra 2: O jogador pode alterar a direção da cobra usando as teclas de seta, mas não pode inverter o sentido diretamente (ex.: não pode ir para a esquerda se está indo para a direita).
-- Regra 3: Cada alimento coletado vale 10 pontos e aumenta o comprimento da cobra em um segmento.
-- Regra 4: A partida termina imediatamente se a cabeça da cobra colidir com qualquer parede ou com qualquer segmento do próprio corpo.
-- Regra 5: A cada 5 alimentos coletados, a velocidade de movimentação da cobra aumenta em um nível.
+- Regra 1: A cobra se move automaticamente; bater nas bordas faz a cobra reaparecer no lado oposto (Cenário Infinito).
+- Regra 2: O jogador pode alterar a direção (exceto inversão 180°), a menos que sob efeito de "Pimenta" (controles invertidos).
+- Regra 3: Alimentos especiais dão bônus: Maçã de Ouro (+pontos/velocidade), Pimenta (inversão), Cogumelo (reduz tamanho).
+- Regra 4: A partida termina apenas se as vidas acabarem (auto-colisão ou tempo expirado).
+- Regra 5: Velocidade aumenta com o nível e pode ser temporariamente boostada por itens.
 
 ## 7. Condição de vitória
 
 Condição de vitória:
 
-> O jogo não tem uma condição de vitória absoluta — a partida segue indefinidamente enquanto o jogador não colidir. A vitória relativa é atingir ou superar o recorde salvo no arquivo de recordes.
+> Sobreviver até o tempo esgotar (5 minutos) ou superar o recorde visual na tela de High Scores.
 
 ## 8. Condição de derrota ou encerramento
 
 Condição de derrota ou encerramento:
 
-> A partida termina quando a cabeça da cobra colidir com uma das bordas da tela ou com qualquer segmento do seu próprio corpo. Ao fim da partida, é exibida a pontuação final e, caso o recorde anterior tenha sido superado, o novo recorde é salvo em arquivo. O jogador pode optar por reiniciar ou encerrar o jogo.
+> Perda de todas as vidas (colisão com o próprio corpo) ou encerramento manual.
 
 ## 9. Elementos previstos no jogo
 
@@ -63,19 +63,19 @@ Condição de derrota ou encerramento:
 
 Descrição:
 
-> A cobra é o elemento principal do jogo. Ela é representada por uma sequência de segmentos quadrados na grade, com a cabeça destacada visualmente. O jogador controla apenas a direção do movimento usando as teclas de seta.
+> Cobra com 7 variações de cores dinâmicas baseadas no nível e HUD com status de efeitos ativos.
 
 ### Obstáculos, inimigos ou desafios
 
 Descrição:
 
-> As bordas da tela funcionam como obstáculos fixos — qualquer colisão com elas encerra a partida. O próprio corpo da cobra também é um obstáculo: à medida que ela cresce, o espaço disponível para manobras diminui, aumentando progressivamente a dificuldade.
+> O próprio corpo da cobra é o maior desafio, agravado pela inversão de controles e aumentos súbitos de velocidade.
 
 ### Itens, alvos ou objetos de interação
 
 Descrição:
 
-> Alimentos aparecem em posições aleatórias válidas da grade (fora do corpo da cobra). Ao colidir com um alimento, a cobra cresce um segmento, a pontuação é incrementada em 10 pontos e um novo alimento é gerado em outra posição aleatória.
+> 4 tipos de itens: Normal (Vermelho), Ouro (Amarelo), Pimenta (Vermelho Claro) e Cogumelo (Roxo).
 
 ### Pontuação, vidas, tempo ou progresso
 

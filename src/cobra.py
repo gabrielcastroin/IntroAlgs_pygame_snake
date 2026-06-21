@@ -40,6 +40,22 @@ class Cobra:
         
         self.corpo.insert(0, cabeca)
     
+    def atravessar_borda(self, largura_tela, altura_tela, tamanho_celula):
+        """Faz a cobra reaparecer no lado oposto ao bater na borda."""
+        cabeca = self.corpo[0]
+        max_x = largura_tela // tamanho_celula
+        max_y = altura_tela // tamanho_celula
+        
+        if cabeca["x"] < 0:
+            cabeca["x"] = max_x - 1
+        elif cabeca["x"] >= max_x:
+            cabeca["x"] = 0
+            
+        if cabeca["y"] < 0:
+            cabeca["y"] = max_y - 1
+        elif cabeca["y"] >= max_y:
+            cabeca["y"] = 0
+
     def comer(self):
         """A cobra come, não remove cauda (cresce)."""
         pass  # Crescimento é implícito ao não remover a cauda
